@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="lib/onsenui/js/angular-onsenui.min.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    var myApp = ons.bootstrap();
+  </script>
+  <script src="service.js"></script>
+  <script src="controller.js"></script>
+</head>
+<body ng-controller="AppController as app">
+  <ons-navigator
+    var="navi"
+    page="page.html">
+  </ons-navigator>
+
+  <ons-template id="page.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="left">
+          <!--<ons-back-button>Back</ons-back-button>-->
+        </div>
+        <div class="center">自動販売機</div>
+      </ons-toolbar>
+
+      <section style="padding: 10px">
+        <div class="hanbaiki">
+          <div class="shouhinretu">
+            <span><img ng-src="{{app.src[0]}}"></span><span><img ng-src="{{app.src[1]}}"></span><span><img ng-src="{{app.src[2]}}"></span>
+          </div>
+          <div class="botanretu">
+            <ons-button ng-click="app.kounyuu(0)">{{app.kakaku[0]}}</ons-button><ons-button ng-click="app.kounyuu(1)">{{app.kakaku[1]}}</ons-button><ons-button ng-click="app.kounyuu(2)">{{app.kakaku[2]}}</ons-button>
+          </div>
+          <div class="shouhinretu">
+            <span><img ng-src="{{app.src[3]}}"></span><span><img ng-src="{{app.src[4]}}"></span><span><img ng-src="{{app.src[5]}}"></span>
+          </div>
+          <div class="botanretu">
+            <ons-button ng-click="app.kounyuu(3)">{{app.kakaku[3]}}</ons-button><ons-button ng-click="app.kounyuu(4)">{{app.kakaku[4]}}</ons-button><ons-button ng-click="app.kounyuu(5)">{{app.kakaku[5]}}</ons-button>
+          </div>
+          <div class="toridasi"><div class="nomimonoWrapper"><img class="nomimono" ng-src="{{app.kounyuuSrc}}"></div><div class="huta" ng-click="app.openHuta($event)"></div></div>
+          <div class="oturi">
+            <ul>
+              <li ng-class="{husoku : app.aaa}">十円</li>
+              <li>五十円</li>
+              <li>百円</li>
+              <li class="husoku">五百円</li>
+              <li>千円</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </ons-page>
+  </ons-template>
+  
+  <ons-dialog var="dialog">
+    <div class="dislog">
+      <p>
+        支払い
+      </p>
+      <div class="monies">
+        <img ng-src="{{app.monies[0]}}" ng-click="app.money(0);"><!--
+     --><img ng-src="{{app.monies[1]}}" ng-click="app.money(1);"><!--
+     --><img ng-src="{{app.monies[2]}}" ng-click="app.money(2);"><!--
+     --><img ng-src="{{app.monies[3]}}" ng-click="app.money(3);"><!--
+     --><img class="bill" ng-src="{{app.monies[4]}}" ng-click="app.money(4);">
+     </div>
+      <div class="fee"><p>商品代金</p><p>{{app.fee | currency : '&yen;' : 0}}</p></div>
+      <div class="pay"><p>支払料金</p><p>{{app.pay | currency : '&yen;' : 0}}</p></div>
+      <div>
+        <ons-button class="cancel" ng-click="dialog.hide();">キャンセル</ons-button><ons-button ng-disabled="app.pay < app.fee" class="payment" ng-click="app.payment()">支払い</ons-button>
+      </div>
+    </div>
+  </ons-dialog>
+
+</body>
+</html>
